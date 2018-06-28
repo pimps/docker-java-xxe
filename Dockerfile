@@ -1,13 +1,6 @@
 FROM apsl/circusbase:latest
-LABEL Description="This image provides Oracle JDK 1.6.0_22." \
-      License="MIT" \
-      Usage="docker run --rm -ti jachinte/oracle-jdk-1.6.0_22 java -version" \
-      Version="0.1.0"
 
-# Use baseimage-docker's init system.
-# CMD ["/sbin/my_init"]
-
-# Download and install Oracle JDK 1.6.0_22.
+# Upload and install Oracle JDK 1.6.0_22.
 ADD jdk-6u22-linux-x64.bin /
 RUN chmod a+x jdk-6u22-linux-x64.bin
 RUN ./jdk-6u22-linux-x64.bin
@@ -21,7 +14,7 @@ ENV PATH $PATH:$JAVA_HOME/bin
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ENV TOMCAT_MAJOR_VERSION 6
-ENV TOMCAT_MINOR_VERSION 6.0.45
+ENV TOMCAT_MINOR_VERSION 6.0.26
 ENV CATALINA_HOME /opt/tomcat
 
 # INSTALL TOMCAT
