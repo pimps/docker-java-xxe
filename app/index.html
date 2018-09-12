@@ -1,1 +1,68 @@
-Test app
+<html>
+
+<script>
+function loadDoc(url, cFunction) {
+  var xhttp;
+  xhttp=new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      cFunction(this);
+    }
+  };
+  xhttp.open("GET", url, true);
+  xhttp.send();
+}
+
+function insertLiteral(literalString, targetElement)
+{
+    var textNode = document.createTextNode(literalString);
+    targetElement.appendChild(textNode)
+    return textNode;
+}
+
+function addBook(url, cFunction) {
+  var xhttp;
+  xhttp=new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+      cFunction("Book added with success!");
+  };
+  var data = document.getElementById("bookxml").value;
+
+  xhttp.open("PUT", url, false);
+
+  xhttp.setRequestHeader("Content-Type", "application/xml");
+  xhttp.send(data);
+}
+
+function printMessage(message) {
+  document.getElementById("message").innerHTML = message;
+}
+
+function myFunction(xhttp) {
+	insertLiteral(xhttp.responseText, document.getElementById("demo"));
+}
+
+loadDoc('/rest/books', myFunction);
+</script>
+
+<h2>Add a new book</h2>
+<p>
+<form>
+<textarea id="bookxml" rows="10" cols="80">
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<book>
+    <title>The Man That Knows Nothing</title>
+    <isbn>31337</isbn>
+    <author>Jon Snow</author>
+</book>
+</textarea>
+<br><br>
+<button type="submit" onclick="addBook('/rest/books',printMessage)">Add</button>
+</form>
+<div id="message">
+<p>
+<p>
+<h2>Books in the database: </h2>
+<p>
+<div id="demo" style="font-family: fixed; white-space: pre;">
+</html>
